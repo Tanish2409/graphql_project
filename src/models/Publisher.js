@@ -9,7 +9,6 @@ const PublisherSchema = new mongoose.Schema({
 		{
 			type: mongoose.Schema.ObjectId,
 			ref: 'Book',
-			required: true,
 		},
 	],
 });

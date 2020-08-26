@@ -4,6 +4,7 @@ const models = require('./models/models');
 require('dotenv').config();
 
 const typeDefs = require('./graphql/typeDefs');
+const resolvers = require('./graphql/rootResolver');
 
 mongoose
 	.connect(process.env.DB_URI, {
@@ -18,8 +19,12 @@ mongoose
 
 const server = new ApolloServer({
 	typeDefs,
-	// resolvers,
+	resolvers: { ...resolvers },
 	context() {
 		return { models };
 	},
+});
+
+server.listen(4000).then(({ url }) => {
+	console.log(`server started at ${url}`);
 });
