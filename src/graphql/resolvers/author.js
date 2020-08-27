@@ -24,17 +24,36 @@ module.exports = {
 
 			return author;
 		},
+
+		async updateAuthor(_, { input }, ctx) {
+			const { Author } = ctx.models;
+
+			const author = await Author.findByIdAndUpdate(
+				input.id,
+				{ $set: { name: input.name } },
+				{ new: true, ommitUndefined: true }
+			);
+
+			return author;
+		},
+
+		async deleteAuthor(_, { id }, ctx) {
+			const { Author } = ctx.models;
+			const { Book } = ctx.models;
+
+			console.log('hey');
+
+			await Book.updateMany({}, { $pull: { authors: id } });
+
+			return await Author.findByIdAndDelete(id);
+		},
 	},
 
 	Author: {
 		async books(author, __, ctx) {
-			const { Author } = ctx.models;
+			const { Book } = ctx.models;
 
-			const { books } = await Author.findById(author._id)
-				.populate('books')
-				.exec();
-
-			return books;
+			return await Book.find({ authors: author.id });
 		},
 	},
 };

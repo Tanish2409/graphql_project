@@ -9,7 +9,49 @@ module.exports = {
 		async book(_, { id }, ctx) {
 			const { Book } = ctx.models;
 
-			return await Book.findById(id);
+			const book = await Book.findById(id);
+
+			return book;
+		},
+	},
+
+	Mutation: {
+		async book(_, { input }, ctx) {
+			const { Book } = ctx.models;
+
+			const book = new Book({
+				name: input.name,
+				publisher: input.publisher,
+				authors: input.authors,
+			});
+
+			await book.save();
+
+			return await book;
+		},
+
+		async updateBook(_, { input }, ctx) {
+			const { Book } = ctx.models;
+
+			const book = await Book.findByIdAndUpdate(
+				input.id,
+				{
+					$set: {
+						name: input.name,
+						publisher: input.publisher,
+						authors: input.authors,
+					},
+				},
+				{ new: true, omitUndefined: true }
+			);
+
+			return book;
+		},
+
+		async deleteBook(_, { id }, ctx) {
+			const { Book } = ctx.models;
+
+			return await Book.findByIdAndDelete(id);
 		},
 	},
 
