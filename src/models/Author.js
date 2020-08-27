@@ -5,12 +5,6 @@ const AuthorSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	books: [
-		{
-			type: mongoose.Schema.ObjectId,
-			ref: 'Book',
-		},
-	],
 });
 
 module.exports = mongoose.model('Author', AuthorSchema);
