@@ -1,11 +1,30 @@
 type Book {
 	id: ID!
 	name: String!
-	publisher: Publisher!
+	publisher: Publisher
 	authors: [Author!]!
 }
 
 type Query {
 	books: [Book!]!
-	book(id: ID!): Book!
+	book(id: ID!): Book
+}
+
+input NewBookInput {
+	name: String!
+	publisher: ID!
+	authors: [ID!]!
+}
+
+input UpdateBookInput {
+	id: ID!
+	name: String
+	publisher: ID
+	authors: [ID!]
+}
+
+type Mutation {
+	book(input: NewBookInput!): Book!
+	updateBook(input: UpdateBookInput!): Book!
+	deleteBook(id: ID!): Book
 }

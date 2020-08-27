@@ -1,10 +1,25 @@
 type Publisher {
 	id: ID!
 	name: String!
-	books: [Book!]!
+	books: [Book]!
 }
 
 type Query {
-	publishers: [Publisher!]!
+	publishers: [Publisher]!
 	publisher(id: ID!): Publisher!
+}
+
+input NewPublisherInput {
+	name: String!
+}
+
+input updatePublisherInput {
+	id: String!
+	name: String
+}
+
+type Mutation {
+	publisher(input: NewPublisherInput!): Publisher!
+	updatePublisher(input: updatePublisherInput!): Publisher!
+	deletePublisher(id: ID!): Publisher
 }

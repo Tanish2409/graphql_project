@@ -9,17 +9,17 @@ type Query {
 	author(id: ID!): Author!
 }
 
-input NewAuthor {
+input NewAuthorInput {
 	name: String!
 }
 
 input UpdateAutherInput {
 	id: ID!
 	name: String
-	books: String
 }
 
 type Mutation {
-	author(input: NewAuthor!): Author!
+	author(input: NewAuthorInput!): Author!
 	updateAuthor(input: UpdateAutherInput!): Author!
+	deleteAuthor(id: ID!): Author
 }
